@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const expressValidator = require('express-validator');
+const expressSession = require('express-session');
+const bodyParser = require('body-parser')
 
 //Obteniendo Rutas
-const routes = require('./routes');
+const routes = require('./routes/routes');
 
 //Settings
 app.set('appName','R&R Solutions');
@@ -12,6 +15,10 @@ app.set('view engine','ejs');
 
 //Middlewares
 app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(expressValidator());
+app.use(expressSession({secret: 'max', saveUnitialized: false, resave: false}));
 
 //Rutas
 app.use(routes);

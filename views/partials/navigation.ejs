@@ -16,9 +16,14 @@
 	  </li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
-	  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-	  <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    <%if(!success){%>
+	    <li><a href="/singUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+	    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    <%}else{%>
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+    <%}%>
 	</ul>
   </div>
 </nav>
+<div class="box-content divisor"></div>
 <!--  End Nav  -->

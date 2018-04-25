@@ -30,7 +30,7 @@ function mostrar(arreglo){
 		if(index !== arreglo.length-1){
 			agregarDivisor(divGroup)
 		}
-		
+
 	}
 	//Crea el popUP
 	$(panelReclamos).dialog({
@@ -38,7 +38,7 @@ function mostrar(arreglo){
 	});
 	//Muestra el popUP
 	$(panelReclamos).show();
-	
+
 }
 
 /*
@@ -57,10 +57,10 @@ function agregarComponente(componente,divContent){
 	});
 	var divReclamo = $("<div></div>").attr("class","modal-content");
 	divReclamo.attr("id",componente.id);
-	
+
 	divReclamo.append(botonReclamo);
 	divReclamo.append(tituloReclamo);
-	
+
 	divContent.append(divReclamo);
 }
 
@@ -86,7 +86,7 @@ function ingresarDescripcion(componente){
 			cell.removeChild( cell.firstChild );
 		}
 	}
-		
+
 	//Crear el contenido del popUP
 	var textArea = $("<textarea></textarea>").attr("class","form-control");
 	textArea.attr("type","textarea");
@@ -118,9 +118,9 @@ function ingresarDescripcion(componente){
 	var divContent = $("<div></div>").attr("class","modal-content");
 	divContent.append(divHeader);
 	divContent.append(divBody);
-	
-	$(panelDescripcion).append(divContent);	
-	
+
+	$(panelDescripcion).append(divContent);
+
 	//Crear el popUp
 	$(panelDescripcion).dialog({
 		closeText: 'X'
@@ -155,4 +155,15 @@ function crearAyudaPopUp(){
 	});
 	//Muestra el popUp
 	$(panelAyuda).show();
+}
+
+function mostrarErrores(erros){
+	var i = 0;
+	var panel = $(divErroresSingUp);
+	panel.attr("role","alert");
+	panel.attr("class","alert alert-danger");
+	while(errors[i] != null){
+		panel.append($("<li></li>").text(errors[i].msg));
+		i++;
+	}
 }
