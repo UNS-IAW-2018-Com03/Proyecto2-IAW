@@ -8,7 +8,16 @@ const reclamoRealizadoSchema = new mongoose.Schema({
   descripcion: {
     type: String,
     required: true
+  },
+  coords:{
+    type: [Number],
+    requiere: true,
+    index: '2dsphere'
+  },
+  propietario:{
+    type: String,
+    requiere: true
   }
 });
 
-mongoose.model('reclamoRealizado', reclamoRealizadoSchema);
+mongoose.model('ReclamoRealizado', reclamoRealizadoSchema);

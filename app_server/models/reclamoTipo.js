@@ -12,4 +12,4 @@ const reclamoTipoSchema = new mongoose.Schema({
   precio: Number
 });
 
-mongoose.model('reclamoTipo', reclamoTipoSchema);
+mongoose.model('ReclamoTipo', reclamoTipoSchema);

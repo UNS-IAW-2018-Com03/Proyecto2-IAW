@@ -8,11 +8,16 @@ const expressValidator = require('express-validator');
 const session = require('express-session');
 const path = require('path');
 const passport = require('passport');
-const flash = requiere('connect-flash');
+const flash = require('connect-flash');
+const mongoose = require('mongoose');
 
 //Obteniendo Rutas
 const index = require('./app_server/routes/index');
 const signUp = require('./app_server/routes/users');
+
+//DB
+const configDB = require('./app_server/models/db');
+mongoose.connect(configDB.url);
 
 //Settings
 app.set('appName','R&R Solutions');
@@ -28,7 +33,7 @@ app.use(expressValidator());
 app.use(session({secret: 'anystringoftext',
                         saveUnitialized: true,
                         resave: true}));
-app.use(password.initialize());
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 

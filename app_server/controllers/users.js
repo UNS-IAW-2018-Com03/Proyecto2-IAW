@@ -1,4 +1,5 @@
 //const funcionesVista = require('../js/funcionesVista');
+var Usuario = require('../models/usuario');
 
 /* GET singUp page. */
 const singUpPage = function (req, res){
@@ -19,22 +20,24 @@ const nuevoUsuario = function (req, res){
     //funcionesVista.mostrarErrores(errors);
   }else{
     req.session.success = true;
-    var user = {
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-    };
+    var newUser = new Usuario();
+    newUser.local.nombre = req.body.username;
+    newUser.local.email = req.body.email;
+    newUser.local.password = req.body.password;
+    newUser.save(function(err){
+      if(err)
+        throw err;
+    });
     dir = '/';
   }
   res.redirect(dir);
 };
 
-
+/*Logout*/
 const salir =  function (req, res){
   req.session.success = false;
   res.redirect('/');
 };
-
 
 
 module.exports = {
