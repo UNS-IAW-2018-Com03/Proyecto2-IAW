@@ -9,7 +9,15 @@
        		<hr>
        	</div>
     </div>
-		<div id="divErroresSingUp"></div>
+		<%if (message1.length > 0){ %>
+			<div class="alert alert-danger"><%=message1%></div>
+		<%}%>
+		<%if (message2.length > 0){ %>
+			<div class="alert alert-danger"><%=message2%></div>
+		<%}%>
+		<%if (message3.length > 0){ %>
+			<div class="alert alert-danger"><%=message3%></div>
+		<%}%>
 		<div class="main-login main-center">
 			<form class="form-horizontal" method="post" action="/submit">
 

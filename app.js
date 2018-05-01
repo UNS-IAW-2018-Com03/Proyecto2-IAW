@@ -14,6 +14,9 @@ const flash = require('connect-flash');
 const index = require('./app_server/routes/index');
 const signUp = require('./app_server/routes/users');
 
+//passport
+//requiere('./app_server/controllers/users')(passport);
+
 //Settings
 app.set('appName','R&R Solutions');
 app.set('views',path.join(__dirname, 'app_server','views'));
