@@ -1,0 +1,29 @@
+<!--  Start Nav  -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+	<div class="navbar-header">
+	  <img src="img/logo.png" alt="logo header" class="logo">
+	</div>
+	<ul class="nav navbar-nav">
+	  <li class="dropdown">
+  		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Estilos
+  		    <span class="caret"></span>
+      </a>
+  		<ul class="dropdown-menu">
+  		  <li><a href="#" onClick="cambiarNoche()">Noche</a></li>
+  		  <li><a href="#" onClick="cambiarDia()">Día</a></li>
+  		</ul>
+	  </li>
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+    <%if(!success){%>
+	    <li><a href="/signUp"onClick="limpiarErrores()"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+	    <li><a href="#" onClick="mostrarLogin()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    <%}else{%>
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+    <%}%>
+	</ul>
+  </div>
+</nav>
+<div class="box-content divisor"></div>
+<!--  End Nav  -->
