@@ -9,15 +9,10 @@ const session = require('express-session');
 const path = require('path');
 const passport = require('passport');
 const flash = require('connect-flash');
-const mongoose = require('mongoose');
 
 //Obteniendo Rutas
 const index = require('./app_server/routes/index');
 const signUp = require('./app_server/routes/users');
-
-//DB
-const configDB = require('./app_server/models/db');
-mongoose.connect(configDB.url);
 
 //Settings
 app.set('appName','R&R Solutions');

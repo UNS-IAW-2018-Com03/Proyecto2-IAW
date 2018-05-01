@@ -12,4 +12,4 @@ const reclamoTipoSchema = new mongoose.Schema({
   precio: Number
 });
 
-mongoose.model('ReclamoTipo', reclamoTipoSchema);
+module.exports = mongoose.model('ReclamoTipo', reclamoTipoSchema);

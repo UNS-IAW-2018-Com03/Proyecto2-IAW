@@ -20,4 +20,4 @@ const reclamoRealizadoSchema = new mongoose.Schema({
   }
 });
 
-mongoose.model('ReclamoRealizado', reclamoRealizadoSchema);
+module.exports = mongoose.model('ReclamoRealizado', reclamoRealizadoSchema);
