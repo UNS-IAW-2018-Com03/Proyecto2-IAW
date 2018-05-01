@@ -5,8 +5,10 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
-const expressSession = require('express-session');
+const session = require('express-session');
 const path = require('path');
+const passport = require('passport');
+const flash = requiere('connect-flash');
 
 //Obteniendo Rutas
 const index = require('./app_server/routes/index');
@@ -23,7 +25,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(expressValidator());
-app.use(expressSession({secret: 'max', saveUnitialized: false, resave: false}));
+app.use(session({secret: 'anystringoftext',
+                        saveUnitialized: true,
+                        resave: true}));
+app.use(password.initialize());
+app.use(passport.session());
+app.use(flash());
 
 //Directorio Publico
 app.use(express.static(path.join(__dirname, '/public')));
