@@ -3,6 +3,7 @@ const db = require('../models/db');
 /* GET singUp page. */
 const singUpPage = function (req, res){
   res.render('signUp.ejs',{
+    success: req.session.success,
     message1 : req.flash('errorMailInvalido'),
     message2 : req.flash('errorPasswordInvalido'),
     message3 : req.flash('errorMailUsado')
@@ -27,7 +28,8 @@ const nuevoUsuario = function (req, res){
     req.session.success = false;
     dir = '/signUp';
   }else{
-    var user = db.buscarUsuario(req.body.email);
+    var user = db.buscarUsuarioEmail(req.body.email);
+    console.log(user);
     if( user != null){
       req.flash('errorMailUsado','El email ya ha sido utilizado');
       req.session.success = false;
@@ -47,9 +49,24 @@ const salir =  function (req, res){
   res.redirect('/');
 };
 
+/*Login*/
+const ingresar = function(req,res){
+    console.log(req.body.email+" "+req.body.password);
+    var user = db.buscarUsuarioEmail(req.body.email);
+    console.log(user);
+    if( user == null){
+      req.flash('errorLogin','Error Login - Ingrese bien los datos');
+      req.session.success = false;
+    }else{
+      req.session.success = true;
+    }
+    res.redirect('/');
+}
+
 
 module.exports = {
   singUpPage,
   nuevoUsuario,
-  salir
+  salir,
+  ingresar
 }

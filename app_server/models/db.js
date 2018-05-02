@@ -19,15 +19,32 @@ const crearUsuario = async function(nombre,email,password){
     });
 };
 
-const buscarUsuario = async function(email){
+const buscarUsuarioEmail = async function(email){
   mongoose.connect(url);
   var ret = null;
   process.nextTick(function(){
     Usuario.findOne({'local.email': email},function(err,user){
+      if(err){
+        console.log(err);
+        throw err;
+      }
+      if(user){
+        ret = user;
+      }
+      mongoose.disconnect();
+    })
+  });
+  return ret;
+};
+
+const buscarUsuarioEmailPassword = async function(email, password){
+  mongoose.connect(url);
+  var ret = null;
+  process.nextTick(function(){
+    Usuario.findOne({'local.email': email, 'local.password': password},function(err,user){
       if(err)
         throw err;
       if(user){
-        console.log(user);
         ret = user;
       }
       mongoose.disconnect();
@@ -38,5 +55,6 @@ const buscarUsuario = async function(email){
 
 module.exports = {
   crearUsuario,
-  buscarUsuario
+  buscarUsuarioEmail,
+  buscarUsuarioEmailPassword
 }

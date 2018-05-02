@@ -193,13 +193,14 @@ function mostrarLogin(){
 
 		var formulario = $("<form></form>");
 		formulario.attr("method","post");
-		formulario.attr("action","/ingresar");
+		formulario.attr("action","/login");
 		var divEmail = $("<div></div>").attr("class","form-group");
 		var lblEmail = $("<label></label>").attr("for","email");
 		lblEmail.text("Email");
 		var inputMail = $("<input></input>").attr("type","email");
 		inputMail.attr("class","form-control");
 		inputMail.attr("id","email");
+		inputMail.attr("name","email");
 		inputMail.attr("placeholder","Ingrese su Email");
 		divEmail.append(lblEmail);
 		divEmail.append(inputMail);
@@ -210,6 +211,7 @@ function mostrarLogin(){
 		var inputPassword = $("<input></input>").attr("type","password");
 		inputPassword.attr("class","form-control");
 		inputPassword.attr("id","password");
+		inputPassword.attr("name","password");
 		inputPassword.attr("placeholder","Ingrese su Contraseña");
 		divPassword.append(lblPassword);
 		divPassword.append(inputPassword);

@@ -7,6 +7,9 @@
 
 		<% include partials/navigation.ejs %>
 
+		<%if (message1.length > 0){ %>
+			<div class="alert alert-danger"><%=message1%></div>
+		<%}%>
 		<div id="map" ></div>
 		<div id="panelReclamos"></div>
 		<div id="panelDescripcion"></div>

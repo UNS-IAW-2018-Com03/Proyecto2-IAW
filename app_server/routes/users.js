@@ -8,4 +8,6 @@ router.post('/submit',controllerUsers.nuevoUsuario);
 
 router.get('/logout',controllerUsers.salir);
 
+router.post('/login',controllerUsers.ingresar);
+
 module.exports = router;
