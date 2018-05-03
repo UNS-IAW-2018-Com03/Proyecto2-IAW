@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controllerUsers = require('../controllers/users');
 
-router.get('/signUp',controllerUsers.singUpPage);
+router.get('/signUp',controllerUsers.signUpPage);
 
 router.post('/submit',controllerUsers.nuevoUsuario);
 

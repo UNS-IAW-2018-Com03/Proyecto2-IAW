@@ -1,60 +1,35 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose').set('debug',true);
 const url = 'mongodb://localhost/test';
 const Usuario = require('../models/usuario');
+const ReclamoTipo = require('../models/reclamoTipo');
+const ReclamoRealizado = require('../models/reclamoRealizado');
 
+mongoose.connect(url);
 
-const crearUsuario = async function(nombre,email,password){
-    mongoose.connect(url);
-    var newUser = new Usuario();
-    newUser.local.nombre = nombre;
-    newUser.local.email = email;
-    newUser.local.password = password;
-    newUser.save( function(err){
-      if(err){
-          throw err;
-          mongoose.disconnect();
-      }else{
-          mongoose.disconnect();
-      }
-    });
+function crearUsuario(nombre,email,password){
+    var user = new Usuario();
+    console.log('entre crear');
+    user.local.nombre = nombre;
+    user.local.email = email;
+    user.local.password = password;
+    console.log('llene el user');
+    return user
 };
 
-const buscarUsuarioEmail = async function(email){
-  mongoose.connect(url);
-  var ret = null;
-  process.nextTick(function(){
-    Usuario.findOne({'local.email': email},function(err,user){
-      if(err){
-        console.log(err);
-        throw err;
-      }
-      if(user){
-        ret = user;
-      }
-      mongoose.disconnect();
-    })
-  });
-  return ret;
+
+const buscarReclamosTipo = function(){
+
 };
 
-const buscarUsuarioEmailPassword = async function(email, password){
-  mongoose.connect(url);
-  var ret = null;
-  process.nextTick(function(){
-    Usuario.findOne({'local.email': email, 'local.password': password},function(err,user){
-      if(err)
-        throw err;
-      if(user){
-        ret = user;
-      }
-      mongoose.disconnect();
-    })
-  });
-  return ret;
+const buscarReclamosRealizado = function(idUser){
+
+};
+
+const agregarReclamoRealizado = function(idUser, tipoReclamo, lat, lng, descripcion){
+
 };
 
 module.exports = {
-  crearUsuario,
-  buscarUsuarioEmail,
-  buscarUsuarioEmailPassword
+  Usuario,
+  crearUsuario
 }

@@ -1,7 +1,7 @@
 const db = require('../models/db');
 
-/* GET singUp page. */
-const singUpPage = function (req, res){
+/* GET signUp page. */
+const signUpPage = function (req, res){
   res.render('signUp.ejs',{
     success: req.session.success,
     message1 : req.flash('errorMailInvalido'),
@@ -26,21 +26,30 @@ const nuevoUsuario = function (req, res){
         req.flash('errorPasswordInvalido',errors[1].msg);
     }
     req.session.success = false;
-    dir = '/signUp';
+    res.redirect('/signUp');
   }else{
-    var user = db.buscarUsuarioEmail(req.body.email);
-    console.log(user);
-    if( user != null){
-      req.flash('errorMailUsado','El email ya ha sido utilizado');
-      req.session.success = false;
-      dir = '/signUp';
-    }else{
-      db.crearUsuario(req.body.username,req.body.email,req.body.password);
-      req.session.success = true;
-      dir = '/';
-    }
+    db.Usuario
+      .findOne({'local.email': req.body.email})
+      .exec((err, user) => {
+        if (user != null) {
+          req.flash('errorMailUsado','El email ya ha sido utilizado');
+          req.session.success = false;
+          res.redirect('/signUp');
+        }else {
+          var newUser = db.crearUsuario(req.body.username,req.body.email,req.body.password);
+          console.log(newUser);
+          newUser.save( function(err){
+            if(err){
+                throw err;
+            }else{
+              req.session.success = true;
+              console.log('Creado con exito re pillo mal locon');
+              res.redirect('/');
+            }
+          });
+        }
+    });
   }
-  res.redirect(dir);
 };
 
 /*Logout*/
@@ -51,21 +60,24 @@ const salir =  function (req, res){
 
 /*Login*/
 const ingresar = function(req,res){
-    console.log(req.body.email+" "+req.body.password);
-    var user = db.buscarUsuarioEmail(req.body.email);
-    console.log(user);
-    if( user == null){
-      req.flash('errorLogin','Error Login - Ingrese bien los datos');
-      req.session.success = false;
-    }else{
-      req.session.success = true;
-    }
-    res.redirect('/');
-}
+    db.Usuario
+      .findOne({'local.email': req.body.email,'local.password': req.body.password})
+      .exec((err, user) => {
+        if (user == null) {
+          req.flash('errorLogin','Error Login - Ingrese bien los datos');
+          req.session.success = false;
+          //mongoose.disconnect();
+        } else {
+          req.session.success = true;
+        }
+        res.redirect('/');
+    });
+};
+
 
 
 module.exports = {
-  singUpPage,
+  signUpPage,
   nuevoUsuario,
   salir,
   ingresar
