@@ -38,27 +38,22 @@ const salir =  function (req, res){
   res.redirect('/');
 };
 
-/*Login*/
-const ingresar = function(req,res){
-
-};
-
-
+/*Login facebook*/
 const facebook = passport.authenticate('facebook');
 
+/*Callback facebook*/
 const facebookCallback =
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
   };
 
-
+/*Auth facebook*/
 const facebookAuth = passport.authenticate('facebook', { failureRedirect: '/login' });
 
 module.exports = {
   facebook,
   facebookAuth,
   facebookCallback,
-  salir,
-  ingresar
+  salir
 }
