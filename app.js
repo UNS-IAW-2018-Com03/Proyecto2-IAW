@@ -12,8 +12,8 @@ const flash = require('connect-flash');
 require('./app_server/models/db');
 
 //Obteniendo Rutas
-require('./app_server/routes/index');
-require('./app_server/routes/users');
+const index = require('./app_server/routes/index');
+const users = require('./app_server/routes/users');
 
 //passport
 //requiere('./app_server/controllers/users')(passport);
@@ -40,7 +40,7 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, '/public')));
 
 //Rutas
-app.use(signUp);
+app.use(users);
 app.use(index);
 
 //404 not Found
@@ -57,11 +57,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-app.listen(3000, () => {
-  console.log('Servidor Funcionando.');
-  console.log('Nombre de la App: ',app.get('appName'));
 });
 
 module.exports = app;
