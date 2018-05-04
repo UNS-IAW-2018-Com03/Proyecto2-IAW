@@ -13,10 +13,6 @@ const reclamoRealizadoSchema = new mongoose.Schema({
     type: [Number],
     requiere: true,
     index: '2dsphere'
-  },
-  propietario:{
-    type: String,
-    requiere: true
   }
 });
 

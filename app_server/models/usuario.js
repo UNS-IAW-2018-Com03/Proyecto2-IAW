@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
 const usuarioSchema = new mongoose.Schema({
-  local: {
-    nombre: {
+  facebook: {
+    id: {
+      type: String,
+      required: true
+    },
+    token: {
       type: String,
       required: true
     },
@@ -10,7 +14,7 @@ const usuarioSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    password: {
+    name: {
       type: String,
       required: true
     }

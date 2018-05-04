@@ -5,7 +5,7 @@ var latitud, longitud;
 
 /*
 Funcion que carga el stilo que el usuario seleccionó
-*/	
+*/
 $(function(){
 	var estilo = localStorage.getItem("Estilo");
 	if(estilo !== null){

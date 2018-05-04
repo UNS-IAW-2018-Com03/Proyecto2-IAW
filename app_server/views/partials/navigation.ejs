@@ -16,12 +16,8 @@
 	  </li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
-    <%if(!success){%>
-	    <li><a href="/signUp"onClick="limpiarErrores()"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-	    <li><a href="#" onClick="mostrarLogin()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    <%}else{%>
+	    <li><a href="/auth/facebook"  class="btn btn-default"><span class="fa fa-facebook"></span> Login</a></li>
       <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
-    <%}%>
 	</ul>
   </div>
 </nav>

@@ -1,35 +1,41 @@
 const mongoose = require('mongoose').set('debug',true);
-const url = 'mongodb://localhost/test';
-const Usuario = require('../models/usuario');
-const ReclamoTipo = require('../models/reclamoTipo');
-const ReclamoRealizado = require('../models/reclamoRealizado');
+const dbURI = 'mongodb://localhost/test';
 
-mongoose.connect(url);
+mongoose.connect(dbURI);
 
-function crearUsuario(nombre,email,password){
-    var user = new Usuario();
-    console.log('entre crear');
-    user.local.nombre = nombre;
-    user.local.email = email;
-    user.local.password = password;
-    console.log('llene el user');
-    return user
+mongoose.connection.on('connected', () => {
+  console.log(`Mongoose connected to ${dbURI}`);
+});
+mongoose.connection.on('error', err => {
+  console.log('Mongoose connection error:', err);
+});
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
+});
+
+const gracefulShutdown = (msg, callback) => {
+  mongoose.connection.close( () => {
+    console.log(`Mongoose disconnected through ${msg}`);
+    callback();
+  });
 };
 
+process.once('SIGUSR2', () => {
+  gracefulShutdown('nodemon restart', () => {
+    process.kill(process.pid, 'SIGUSR2');
+  });
+});
+process.on('SIGINT', () => {
+  gracefulShutdown('app termination', () => {
+    process.exit(0);
+  });
+});
+process.on('SIGTERM', () => {
+  gracefulShutdown('Heroku app shutdown', () => {
+    process.exit(0);
+  });
+});
 
-const buscarReclamosTipo = function(){
-
-};
-
-const buscarReclamosRealizado = function(idUser){
-
-};
-
-const agregarReclamoRealizado = function(idUser, tipoReclamo, lat, lng, descripcion){
-
-};
-
-module.exports = {
-  Usuario,
-  crearUsuario
-}
+require('./reclamoTipo');
+require('./reclamoRealizado');
+require('./usuario');

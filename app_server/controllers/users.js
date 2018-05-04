@@ -1,84 +1,64 @@
-const db = require('../models/db');
+const passport = require('passport');
+const User = require('../models/usuario');
+const FacebookStrategy = require('passport-facebook').Strategy;
 
-/* GET signUp page. */
-const signUpPage = function (req, res){
-  res.render('signUp.ejs',{
-    success: req.session.success,
-    message1 : req.flash('errorMailInvalido'),
-    message2 : req.flash('errorPasswordInvalido'),
-    message3 : req.flash('errorMailUsado')
-  });
-  req.session.errors = null;
-};
-
-/*Crear nuevo usuario*/
-const nuevoUsuario = function (req, res){
-  req.check('email','Direccion de e-mail invalida').isEmail();
-  req.check('password','Contraseña invalida').isLength({min: 4}).equals(req.body.confirmPassword);
-  var errors = req.validationErrors();
-  var dir = '';
-  var errores;
-  if(errors){
-    if(errors[0]){
-        req.flash('errorMailInvalido',errors[0].msg);
-    }
-    if(errors[1]){
-        req.flash('errorPasswordInvalido',errors[1].msg);
-    }
-    req.session.success = false;
-    res.redirect('/signUp');
-  }else{
-    db.Usuario
-      .findOne({'local.email': req.body.email})
-      .exec((err, user) => {
-        if (user != null) {
-          req.flash('errorMailUsado','El email ya ha sido utilizado');
-          req.session.success = false;
-          res.redirect('/signUp');
-        }else {
-          var newUser = db.crearUsuario(req.body.username,req.body.email,req.body.password);
-          console.log(newUser);
-          newUser.save( function(err){
-            if(err){
+passport.use(new FacebookStrategy({
+    clientID: '212363842696111',
+    clientSecret: 'f42645dbba1e3e3d6f4393c99bde6e81',
+    callbackURL: 'http://localhost:3000/auth/facebook/callback',
+    profileFields: ['id','displayName','email']
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    process.nextTick(function(){
+      User.findOne({'facebook.id': profile.id}, function(err,user){
+          if(err)
+            return cb(err);
+          if(user)
+            return cb(null,user);
+          else
+            var newUser = new User();
+            newUser.facebook.id = profile.id;
+            newUser.facebook.token = accessToken;
+            newUser.facebook.name = profile.name.givenName +' '+ profile.name.familyName;
+            newUser.facebook.email = profile.email[0].value;
+            newUser.save(function(err){
+              if(err)
                 throw err;
-            }else{
-              req.session.success = true;
-              console.log('Creado con exito re pillo mal locon');
-              res.redirect('/');
-            }
-          });
-        }
+              return done(null, newUser);
+            });
+      });
     });
   }
-};
+));
+
 
 /*Logout*/
 const salir =  function (req, res){
-  req.session.success = false;
+  req.logout();
   res.redirect('/');
 };
 
 /*Login*/
 const ingresar = function(req,res){
-    db.Usuario
-      .findOne({'local.email': req.body.email,'local.password': req.body.password})
-      .exec((err, user) => {
-        if (user == null) {
-          req.flash('errorLogin','Error Login - Ingrese bien los datos');
-          req.session.success = false;
-          //mongoose.disconnect();
-        } else {
-          req.session.success = true;
-        }
-        res.redirect('/');
-    });
+
 };
 
 
+const facebook = passport.authenticate('facebook');
+
+const facebookCallback =
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  };
+
+
+const facebookAuth = passport.authenticate('facebook', { failureRedirect: '/login' });
 
 module.exports = {
-  signUpPage,
-  nuevoUsuario,
+  facebook,
+  facebookAuth,
+  facebookCallback,
   salir,
   ingresar
 }

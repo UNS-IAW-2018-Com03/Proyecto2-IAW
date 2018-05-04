@@ -9,6 +9,7 @@ const session = require('express-session');
 const path = require('path');
 const passport = require('passport');
 const flash = require('connect-flash');
+require('./app_server/models/db');
 
 //Obteniendo Rutas
 const index = require('./app_server/routes/index');

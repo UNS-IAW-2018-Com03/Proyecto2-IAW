@@ -8,8 +8,7 @@ const reclamoTipoSchema = new mongoose.Schema({
   imagen: {
     type: String,
     required: true
-  },
-  precio: Number
+  }
 });
 
 module.exports = mongoose.model('ReclamoTipo', reclamoTipoSchema);

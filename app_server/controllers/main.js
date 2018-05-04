@@ -3,7 +3,7 @@
 /* GET home page. */
 const homePage = function (req, res) {
   res.render('index',{
-    success: req.session.success,
+    user: req.user,
     message1 : req.flash('errorLogin'),
   });
 };
