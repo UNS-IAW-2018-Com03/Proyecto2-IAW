@@ -12,8 +12,8 @@ const flash = require('connect-flash');
 require('./app_server/models/db');
 
 //Obteniendo Rutas
-const index = require('./app_server/routes/index');
-const signUp = require('./app_server/routes/users');
+require('./app_server/routes/index');
+require('./app_server/routes/users');
 
 //passport
 //requiere('./app_server/controllers/users')(passport);
