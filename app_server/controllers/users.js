@@ -1,26 +1,26 @@
 const passport = require('passport');
 const User = require('../models/usuario');
-const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-passport.use(new FacebookStrategy({
-    clientID: '212363842696111',
-    clientSecret: 'f42645dbba1e3e3d6f4393c99bde6e81',
-    callbackURL: 'http://localhost:3000/auth/facebook/callback',
+passport.use(new GoogleStrategy({
+    clientID: '598002869112-3tn1q7blasc131ou9c8sjk0t30o6fs0a.apps.googleusercontent.com',
+    clientSecret: 'UBSKZ-zc7I0KsMEzaY9Cd2V-',
+    callbackURL: 'http://localhost:3000/auth/google/callback',
     profileFields: ['id','displayName','email']
   },
   function(accessToken, refreshToken, profile, cb) {
     process.nextTick(function(){
-      User.findOne({'facebook.id': profile.id}, function(err,user){
+      User.findOne({'google.id': profile.id}, function(err,user){
           if(err)
             return cb(err);
           if(user)
             return cb(null,user);
           else
             var newUser = new User();
-            newUser.facebook.id = profile.id;
-            newUser.facebook.token = accessToken;
-            newUser.facebook.name = profile.name.givenName +' '+ profile.name.familyName;
-            newUser.facebook.email = profile.email[0].value;
+            newUser.google.id = profile.id;
+            newUser.google.token = accessToken;
+            newUser.google.name = profile.displayName;
+            newUser.google.email = profile.email[0].value;
             newUser.save(function(err){
               if(err)
                 throw err;
@@ -39,21 +39,21 @@ const salir =  function (req, res){
 };
 
 /*Login facebook*/
-const facebook = passport.authenticate('facebook');
+const google = passport.authenticate('google', {scope:['profile','email']});
 
 /*Callback facebook*/
-const facebookCallback =
+const googleCallback =
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
   };
 
 /*Auth facebook*/
-const facebookAuth = passport.authenticate('facebook', { failureRedirect: '/login' });
+const googleAuth = passport.authenticate('google', { failureRedirect: '/login' });
 
 module.exports = {
-  facebook,
-  facebookAuth,
-  facebookCallback,
+  google,
+  googleAuth,
+  googleCallback,
   salir
 }

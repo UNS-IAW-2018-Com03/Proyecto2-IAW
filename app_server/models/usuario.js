@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const usuarioSchema = new mongoose.Schema({
-  facebook: {
+  google: {
     id: {
       type: String,
       required: true

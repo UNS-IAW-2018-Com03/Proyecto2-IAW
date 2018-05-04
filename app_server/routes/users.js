@@ -4,8 +4,8 @@ const controllerUsers = require('../controllers/users');
 
 router.get('/logout',controllerUsers.salir);
 
-router.get('/auth/facebook',controllerUsers.facebook);
+router.get('/auth/google',controllerUsers.google);
 
-router.get('/auth/facebook/callback',controllerUsers.facebookAuth, controllerUsers.facebookCallback);
+router.get('/auth/google/callback',controllerUsers.googleAuth, controllerUsers.googleCallback);
 
 module.exports = router;
