@@ -2,7 +2,6 @@ const mongoose = require('mongoose').set('debug',true);
 const dbURI = process.env.MLAB_URI;
 const url = 'mongodb://localhost/test';
 const dbURL = 'mongodb://manuelrios:malunchi94@ds113358.mlab.com:13358/reclamos';
-console.log(dbURL);
 mongoose.connect(dbURL);
 
 mongoose.connection.on('connected', () => {

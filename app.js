@@ -12,8 +12,9 @@ const flash = require('connect-flash');
 require('./app_server/models/db');
 
 //Obteniendo Rutas
-const index = require('./app_server/routes/index');
-const users = require('./app_server/routes/users');
+const indexRouter = require('./app_server/routes/index');
+const usersRouter = require('./app_server/routes/users');
+const apiRouter = require('./app_server/routes/api');
 
 //passport
 //requiere('./app_server/controllers/users')(passport);
@@ -40,8 +41,9 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, '/public')));
 
 //Rutas
-app.use(users);
-app.use(index);
+app.use(apiRouter);
+app.use(usersRouter);
+app.use(indexRouter);
 
 //Error de siempre
 app.get('/favicon.ico', (req, res) => res.status(204));

@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const reclamoRealizadoSchema = new mongoose.Schema({
-  tipo: {
+  titulo: {
+    type: String,
+    required: true
+  },
+  imagen: {
     type: String,
     required: true
   },
@@ -9,10 +13,21 @@ const reclamoRealizadoSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  coords:{
-    type: [Number],
-    requiere: true,
-    index: '2dsphere'
+  latitud:{
+    type: Number,
+    requiere: true
+  },
+  longitud:{
+    type: Number,
+    requiere: true
+  },
+  fecha:{
+    type: String,
+    requiere: true
+  },
+  user:{
+    type: String,
+    requiere: true
   }
 });
 

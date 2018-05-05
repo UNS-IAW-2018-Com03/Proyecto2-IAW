@@ -18,6 +18,10 @@ const usuarioSchema = new mongoose.Schema({
       type: String,
       required: true
     }
+  },
+  estilo:{
+    type: String,
+    required: true
   }
 });
 

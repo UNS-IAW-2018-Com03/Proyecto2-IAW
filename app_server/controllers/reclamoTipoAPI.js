@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ReclamoTipo = mongoose.model('ReclamoTipo');
+const ReclamoTipo = require('../models/reclamoTipo');
 
 const getReclamosTipo = function(req,res){
   ReclamoTipo

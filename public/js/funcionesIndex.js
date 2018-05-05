@@ -1,19 +1,18 @@
 
 var map;
-var jsonReclamo;
 var latitud, longitud;
 
 /*
 Funcion que carga el stilo que el usuario seleccionó
 */
 $(function(){
-	var estilo = localStorage.getItem("Estilo");
-	if(estilo !== null){
-		$("#linkEstilo").attr("href",estilo);
-	}
-	else {
-		$("#linkEstilo").attr("href","css/lightstyle.css");
-	}
+	$.get("./estilo",function(data,status){
+		var estilo = data;
+		if(estilo !== null){
+			$("#linkEstilo").attr("href",estilo);
+		}
+	});
+
 });
 
 /*
@@ -70,24 +69,48 @@ function cambiarEstilo(num){
 Funcion que cambia el estilo del css a noche
 */
 function cambiarNoche(){
-	//Save in local storage
-	localStorage.setItem("Estilo","css/darkstyle.css");
-	localStorage.setItem("NumEstilo",1);
-	//Cambio estilo
-	cambiarEstilo(1);
-	$("#linkEstilo").attr("href","css/darkstyle.css");
+	//Guarda el estilo en el server
+	$.ajax({
+	    url: './estilo',
+	    type: 'POST',
+	    data: JSON.stringify({estilo: "css/darkstyle.css"}),
+    	contentType: "application/json",
+    	dataType: "json",
+	    success: function(data){
+					localStorage.setItem("Estilo","css/darkstyle.css");
+					localStorage.setItem("NumEstilo",1);
+					//Cambio estilo
+					cambiarEstilo(1);
+					$("#linkEstilo").attr("href","css/darkstyle.css");
+	    },
+	    error: function(data) {
+				console.log("POST ERR");
+	    }
+	});
 }
 
 /*
 Funcion que cambia el estilo css al dia
 */
 function cambiarDia(){
-	//Save in local storage
-	localStorage.setItem("Estilo","css/lightstyle.css");
-	localStorage.setItem("NumEstilo",2);
-	//Cambio estilo
-	cambiarEstilo(2);
-	$("#linkEstilo").attr("href","css/lightstyle.css");
+	//Guarda el estilo en el server
+	$.ajax({
+	    url: './estilo',
+	    type: 'POST',
+	    data: JSON.stringify({estilo: "css/lightstyle.css"}),
+    	contentType: "application/json",
+    	dataType: "json",
+	    success: function(data){
+					localStorage.setItem("Estilo","css/lightstyle.css");
+					localStorage.setItem("NumEstilo",2);
+					//Cambio estilo
+					cambiarEstilo(2);
+					$("#linkEstilo").attr("href","css/lightstyle.css");
+	    },
+	    error: function(data) {
+				console.log("POST ERR");
+	    }
+	});
 }
 
 /*
@@ -130,6 +153,8 @@ function localizacionMapa(map){
 			mostrarTodosReclamosRealizados();
 			//Muestra una ventana de ayuda
 			mostrarAyuda();
+			//Mostrar Clima
+			consultarClima(pos.lat,pos.lng);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -196,76 +221,66 @@ Guarda la latitud y longitud de donde se hizo el dobleclick
 function mostrarTipoReclamos(lat, lng){
 	latitud = lat;
 	longitud = lng;
-	var arreglo = cargarReclamos();
-	mostrar(arreglo);
+	cargarReclamos();
+
 }
 
 /*
-Funcion que carga los reclamos del Model para mostrarlos en la vista.
-Retorna un arreglo con los reclamos.
+Funcion que carga los reclamos del servidor para mostrarlos en la vista.
 */
 function cargarReclamos(){
-	var index;
-	var arreglo = new Array();
-	for(index = 0; index < jsonReclamo.length; ++index){
-		arreglo[index] = jsonReclamo[index];
-	}
-	return arreglo;
+	$.get("./reclamosTipo",function(data,status){
+		var index;
+		var arreglo = new Array();
+		for(index = 0; index < data.length; ++index){
+			arreglo[index] = data[index];
+		}
+		console.log(arreglo);
+		mostrar(arreglo);
+	});
 }
 
 /*
-Funcion que guarda los reclamos en el localStorage y lo muestra
+Funcion que guarda los reclamos en el servidor y lo muestra
 */
 function guardarReclamo(componente, latitud, longitud){
 	$(panelDescripcion).hide();
 	$(panelDescripcion).dialog("close");
-	var id = componente.id;
 	var img = componente.imagen;
 	var titulo = componente.titulo;
 	var descripcion = $(txtDescripcion).val();
 	var date = new Date();
-	//Pide los reclamos realizados del localStorage
-	var jsonReclamosRealizadosLocal = localStorage.getItem("ReclamosRealizados");
-	var jsonReclamosRealizados
-	if(jsonReclamosRealizadosLocal == null){
-		jsonReclamosRealizados = [];
-	}
-	else{
-		jsonReclamosRealizados = JSON.parse(jsonReclamosRealizadosLocal);
-	}
-	//Agrega el reclamo nuevo realizado
-	jsonReclamosRealizados.push({
-		"tipo": id,
-		"imagen": img,
-		"titulo": titulo,
-		"latitud": latitud,
-		"longitud": longitud,
-		"descripcion": descripcion,
-		"fecha": date,
-
+	$.ajax({
+	    url: './reclamosRealizados',
+	    type: 'POST',
+	    data: JSON.stringify({imagen: img, titulo: titulo, descripcion: descripcion, fecha:	date, latitud: latitud, longitud: longitud}),
+    	contentType: "application/json",
+    	dataType: "json",
+	    success: function(data){
+					mostrarReclamo(titulo,img,longitud,latitud,descripcion,date);
+	    },
+	    error: function(data) {
+				console.log("POST ERR");
+	    }
 	});
-	//Muestra el reclamo
-	mostrarReclamo(titulo,img,longitud,latitud,descripcion,date);
-	//Lo almacena en el localStorage
-	localStorage.setItem("ReclamosRealizados", JSON.stringify(jsonReclamosRealizados));
 }
 
 /*
-Funcion que mustra todoso los reclamos realizados que estan almacenados en el localStorage
+Funcion que mustra todoso los reclamos realizados que estan almacenados
 */
 function mostrarTodosReclamosRealizados(){
-	//Pide los reclamos realizados del localStorage
-	var jsonReclamosRealizadosLocal = localStorage.getItem("ReclamosRealizados");
-	if(jsonReclamosRealizadosLocal !== null){
-		var jsonReclamosRealizados = JSON.parse(jsonReclamosRealizadosLocal);
-		var index;
-		var reclamo;
-		//Para cada reclamo lo muestra en el mapa
-		for(index = 0; index < jsonReclamosRealizados.length; ++index){
-			reclamo = jsonReclamosRealizados[index];
-			mostrarReclamo(reclamo.titulo,reclamo.imagen,reclamo.longitud,reclamo.latitud,reclamo.descripcion,reclamo.fecha);
+	//Pide los reclamos realizados del servidor
+	$.get("/reclamosRealizados",function(data,status){
+		if(data !== null){
+			var index;
+			var reclamo;
+			//Muestra los reclamos
+			for(index = 0; index < data.length; ++index){
+				reclamo = data[index];
+				mostrarReclamo(reclamo.titulo,reclamo.imagen,reclamo.longitud,reclamo.latitud,reclamo.descripcion,reclamo.fecha);
+			}
 		}
-	}
+	});
 }
 
 /*
@@ -273,4 +288,13 @@ Funcion que llama a la vista para crear el popUp de ayuda
 */
 function mostrarAyuda(){
 		crearAyudaPopUp();
+}
+
+/*Funcion que consulta Web Api Clima*/
+function consultarClima(lat,long){
+	$.get("api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=8d9e29757db3709bf5a30dccdc7bc6ec",function(data,status){
+		if(data !== null){
+			console.log(data);
+		}
+	});
 }
