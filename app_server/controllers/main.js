@@ -2,7 +2,13 @@
 
 /* GET home page. */
 const homePage = function (req, res) {
-  res.render('index');
+  if(req.user != null){
+      res.render('index',{user: req.user});
+  }
+  else{
+      res.render('ingrese',{user: null});
+  }
+
 };
 
 module.exports = {

@@ -2,22 +2,28 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
 	<div class="navbar-header">
-	  <img src="img/logo.png" alt="logo header" class="logo">
+	  <img src="img/logo.png" alt="logo header" class="logo" href='/'>
 	</div>
-	<ul class="nav navbar-nav">
-	  <li class="dropdown">
-  		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Estilos
-  		    <span class="caret"></span>
-      </a>
-  		<ul class="dropdown-menu">
-  		  <li><a href="#" onClick="cambiarNoche()">Noche</a></li>
-  		  <li><a href="#" onClick="cambiarDia()">Día</a></li>
-  		</ul>
-	  </li>
-	</ul>
+  <%if(user != null){%>
+  	<ul class="nav navbar-nav">
+       <li class="dropdown">
+    		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Estilos
+    		    <span class="caret"></span>
+        </a>
+    		<ul class="dropdown-menu">
+    		  <li><a href="#" onClick="cambiarNoche()">Noche</a></li>
+    		  <li><a href="#" onClick="cambiarDia()">Día</a></li>
+    		</ul>
+       </li>
+  	</ul>
+  <%}%>
 	<ul class="nav navbar-nav navbar-right">
-	    <li><a href="/auth/google"  class="btn btn-danger"><span class="fa fa-google-plus"></span> Login</a></li>
-      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <%if(user == null){%>
+  	    <li><a href="/auth/google"  class="btn btn-danger"><span class="fa fa-google-plus"></span> Login</a></li>
+      <%}else{%>
+        <li><a href="#"><%=user.google.name%></a></li>
+        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <%}%>
 	</ul>
   </div>
 </nav>

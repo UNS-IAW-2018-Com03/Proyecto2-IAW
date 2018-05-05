@@ -43,6 +43,9 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(users);
 app.use(index);
 
+//Error de siempre
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 //404 not Found
 app.use(function(req, res, next) {
   next(createError(404));

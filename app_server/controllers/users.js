@@ -54,7 +54,7 @@ const google = passport.authenticate('google', {scope:['profile','email']});
 /*Callback facebook*/
 const googleCallback =
   function(req, res) {
-    // Successful authentication, redirect home.
+    console.log(req.user);
     res.redirect('/');
   };
 

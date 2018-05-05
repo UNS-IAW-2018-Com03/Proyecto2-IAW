@@ -1,9 +1,10 @@
 const mongoose = require('mongoose').set('debug',true);
 const dbURI = process.env.MLAB_URI;
 const url = 'mongodb://localhost/test';
+const dbURL = 'mongodb://manuelrios:malunchi94@ds113358.mlab.com:13358/reclamos';
+console.log(dbURL);
+mongoose.connect(dbURL);
 
-mongoose.connect(dbURI);
-/*
 mongoose.connection.on('connected', () => {
   console.log(`Mongoose connected to ${dbURI}`);
 });
@@ -36,7 +37,7 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
-*/
+
 require('./reclamoTipo');
 require('./reclamoRealizado');
 require('./usuario');
