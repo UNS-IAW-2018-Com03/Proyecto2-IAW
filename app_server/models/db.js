@@ -1,8 +1,9 @@
 const mongoose = require('mongoose').set('debug',true);
-const dbURI = process.env.MLAB_URI;;
+const dbURI = process.env.MLAB_URI;
+const url = 'mongodb://localhost/test';
 
 mongoose.connect(dbURI);
-
+/*
 mongoose.connection.on('connected', () => {
   console.log(`Mongoose connected to ${dbURI}`);
 });
@@ -35,7 +36,7 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
-
+*/
 require('./reclamoTipo');
 require('./reclamoRealizado');
 require('./usuario');
