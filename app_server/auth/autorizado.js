@@ -1,7 +1,6 @@
 const isAuthenticated = function(req, res, next) {
 
 	if (req.isAuthenticated()){
-			console.log('Estoy Autorizado');
 			return next();
 	}
 

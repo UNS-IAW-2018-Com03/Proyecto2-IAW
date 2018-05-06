@@ -15,9 +15,7 @@ require('./app_server/models/db');
 const indexRouter = require('./app_server/routes/index');
 const usersRouter = require('./app_server/routes/users');
 const apiRouter = require('./app_server/routes/api');
-
-//passport
-//requiere('./app_server/controllers/users')(passport);
+const apiClima = require('./app_server/routes/clima');
 
 //Settings
 app.set('appName','R&R Solutions');
@@ -44,6 +42,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(apiRouter);
 app.use(usersRouter);
 app.use(indexRouter);
+app.use(apiClima);
 
 //Error de siempre
 app.get('/favicon.ico', (req, res) => res.status(204));

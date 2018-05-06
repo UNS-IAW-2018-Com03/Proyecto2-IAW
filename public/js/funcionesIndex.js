@@ -291,8 +291,8 @@ function mostrarAyuda(){
 }
 
 /*Funcion que consulta Web Api Clima*/
-function consultarClima(lat,long){
-	$.get("api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=8d9e29757db3709bf5a30dccdc7bc6ec",function(data,status){
+function consultarClima(lat,lng){
+	$.get("/clima?lat="+lat+"&lng="+lng,function(data,status){
 		if(data !== null){
 			console.log(data);
 		}
