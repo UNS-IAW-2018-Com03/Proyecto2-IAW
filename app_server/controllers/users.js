@@ -5,7 +5,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(new GoogleStrategy({
     clientID: '598002869112-3tn1q7blasc131ou9c8sjk0t30o6fs0a.apps.googleusercontent.com',
     clientSecret: 'UBSKZ-zc7I0KsMEzaY9Cd2V-',
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: 'https://mis-reclamos.herokuapp.com/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, cb) {
     process.nextTick(function(){
