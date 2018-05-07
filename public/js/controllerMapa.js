@@ -88,9 +88,9 @@ function mostrarReclamo(titulo,imagen,longitud,latitud,descripcion,fecha){
 	var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
-            '<h2 id="firstHeading" class="firstHeading">'+titulo+'</h2>'+
+            '<h3 id="firstHeading" class="firstHeading">'+titulo+'</h3>'+
             '<div id="bodyContent">'+
-			'<h3>Descripcion: </h3>'+descripcion+
+			'<h4>Descripcion: </h4>'+descripcion+
 			'<h4>Fecha: </h4>'+fecha+
             '</div>'+
             '</div>';
@@ -139,10 +139,11 @@ function guardarReclamo(componente, latitud, longitud){
 	var titulo = componente.titulo;
 	var descripcion = $(txtDescripcion).val();
 	var date = new Date();
+	var fecha = date.getDay()+"/"+date.getMonth()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
 	$.ajax({
 	    url: './reclamosRealizados',
 	    type: 'POST',
-	    data: JSON.stringify({imagen: img, titulo: titulo, descripcion: descripcion, fecha:	date, latitud: latitud, longitud: longitud}),
+	    data: JSON.stringify({imagen: img, titulo: titulo, descripcion: descripcion, fecha:	fecha, latitud: latitud, longitud: longitud}),
     	contentType: "application/json",
     	dataType: "json",
 	    success: function(data){
