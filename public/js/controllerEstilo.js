@@ -4,10 +4,15 @@ Funcion que carga el stilo que el usuario seleccionó
 */
 $(function(){
 	$.get("./estilo",function(data,status){
-		var estilo = data;
+    var jsonData = data;
+		var estilo = jsonData.estilo;
+    var estiloMapa = jsonData.estiloMapa;
 		if(estilo !== null){
 			$("#linkEstilo").attr("href",estilo);
 		}
+    if(estiloMapa !== null){
+      cambiarEstilo(estiloMapa);
+    }
 	});
 });
 
@@ -20,7 +25,7 @@ function cambiarNoche(){
 	$.ajax({
 	    url: './estilo',
 	    type: 'POST',
-	    data: JSON.stringify({estilo: "css/darkstyle.css"}),
+	    data: JSON.stringify({estilo: "css/darkstyle.css", estiloMapa: "1"}),
     	contentType: "application/json",
     	dataType: "json",
 	    success: function(data){
@@ -44,7 +49,7 @@ function cambiarDia(){
 	$.ajax({
 	    url: './estilo',
 	    type: 'POST',
-	    data: JSON.stringify({estilo: "css/lightstyle.css"}),
+	    data: JSON.stringify({estilo: "css/lightstyle.css", estiloMapa: "2"}),
     	contentType: "application/json",
     	dataType: "json",
 	    success: function(data){
@@ -101,11 +106,5 @@ function cambiarEstilo(num){
 Funcion que se ejecuta cuando se carga en body, que inicializa estilo css guardado, estilo del mapa y los marcadores
 */
 function inicializar(){
-	var num = localStorage.getItem("NumEstilo");
-	if(num !== null){
-		initMap(num);
-	}else{
-		initMap(2);
-	}
-
+	initMap(2);
 }

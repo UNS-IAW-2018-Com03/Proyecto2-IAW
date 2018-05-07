@@ -22,6 +22,10 @@ const usuarioSchema = new mongoose.Schema({
   estilo:{
     type: String,
     required: true
+  },
+  estiloMapa:{
+    type: String,
+    required: true
   }
 });
 

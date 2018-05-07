@@ -22,7 +22,8 @@ passport.use(new GoogleStrategy({
             newUser.google.token = accessToken;
             newUser.google.name = profile.displayName;
             newUser.google.email = profile.emails[0].value;
-            newUser.estilo = 'css/lightstyle.css'
+            newUser.estilo = 'css/lightstyle.css';
+            newUser.estiloMapa = '2';
             newUser.save(function(err){
               if(err)
                 throw err;
@@ -55,16 +56,15 @@ const google = passport.authenticate('google', {scope:['profile','email']});
 /*Callback facebook*/
 const googleCallback =
   function(req, res) {
-    console.log(req.user);
     res.redirect('/');
   };
 
 /*Auth facebook*/
-const googleAuth = passport.authenticate('google', { failureRedirect: '/login' });
+const googleAuth = passport.authenticate('google', { failureRedirect: '/' });
 
 const setEstilo = function(req, res) {
   User
-    .update({_id: req.user._id},{estilo: req.body.estilo},
+    .update({_id: req.user._id},{estilo: req.body.estilo, estiloMapa: req.body.estiloMapa},
           {upsert: true, setDefaultOnInsert: true}, (err,user) => {
             if(err)
               res.status(404).json(err);
@@ -81,7 +81,7 @@ const getEstilo = function(req,res){
       if(err)
         res.status(404).json(err);
       else{
-        res.status(200).json(user.estilo);
+        res.status(200).json(user);
       }
     })
 }

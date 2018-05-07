@@ -88,9 +88,9 @@ function mostrarReclamo(titulo,imagen,longitud,latitud,descripcion,fecha){
 	var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">'+titulo+'</h1>'+
+            '<h2 id="firstHeading" class="firstHeading">'+titulo+'</h2>'+
             '<div id="bodyContent">'+
-			'<h1>Descripcion: </h1>'+descripcion+
+			'<h3>Descripcion: </h3>'+descripcion+
 			'<h4>Fecha: </h4>'+fecha+
             '</div>'+
             '</div>';

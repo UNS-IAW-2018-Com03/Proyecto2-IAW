@@ -6,8 +6,6 @@ function consultarClima(lat,lng){
       var jsonData = JSON.parse(data);
       var temp = Math.trunc(parseInt(jsonData.main.temp) - 273.15);
       var ciudad = jsonData.name;
-			console.log(temp);
-      console.log(ciudad);
       mostrarClima(ciudad,temp);
 		}
 	});
