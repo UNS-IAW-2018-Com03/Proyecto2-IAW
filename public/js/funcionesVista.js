@@ -3,7 +3,7 @@
 /*
 Funcion que recibe un arreglo de reclamos que se pueden hacer y los muestra en un popUP
 */
-function mostrar(arreglo){
+function mostrarReclamosPicker(arreglo){
 	//Remueve los hijos del panel de reclamos
 	var cell = document.getElementById("panelReclamos");
 	if ( cell.hasChildNodes() ){
@@ -155,4 +155,10 @@ function crearAyudaPopUp(){
 	});
 	//Muestra el popUp
 	$(panelAyuda).show();
+}
+
+
+function mostrarClima(city, temp){
+	$(ciudad).text(city);
+	$(clima).text(temp+"°C");
 }
