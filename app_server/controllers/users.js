@@ -62,6 +62,7 @@ const googleCallback =
 /*Auth facebook*/
 const googleAuth = passport.authenticate('google', { failureRedirect: '/' });
 
+/*Guardar el estilo del usuario*/
 const setEstilo = function(req, res) {
   User
     .update({_id: req.user._id},{estilo: req.body.estilo, estiloMapa: req.body.estiloMapa},
@@ -73,7 +74,7 @@ const setEstilo = function(req, res) {
             }
           })
 }
-
+/*Obtener el estilo del usuario*/
 const getEstilo = function(req,res){
   User
     .findById(req.user._id)
@@ -81,7 +82,10 @@ const getEstilo = function(req,res){
       if(err)
         res.status(404).json(err);
       else{
-        res.status(200).json(user);
+        res.status(200).json(
+          { 'estilo': user.estilo,
+            'estiloMapa': user.estiloMapa
+          });
       }
     })
 }

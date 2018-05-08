@@ -156,9 +156,3 @@ function crearAyudaPopUp(){
 	//Muestra el popUp
 	$(panelAyuda).show();
 }
-
-
-function mostrarClima(city, temp){
-	$(ciudad).text(city);
-	$(clima).text(temp+"°C");
-}
