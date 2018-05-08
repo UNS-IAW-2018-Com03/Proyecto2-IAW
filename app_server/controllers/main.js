@@ -11,6 +11,11 @@ const homePage = function (req, res) {
 
 };
 
+const readmePage = function (req,res) {
+  res.render('README');
+}
+
 module.exports = {
-  homePage
+  homePage,
+  readmePage
 }
