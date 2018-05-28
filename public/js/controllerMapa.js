@@ -74,7 +74,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 /*
 Funcion que crea un marcador con los datos ingresados como parametro y lo coloca en el mapa
 */
-function mostrarReclamo(titulo,imagen,longitud,latitud,descripcion,fecha){
+function mostrarReclamo(titulo,imagen,longitud,latitud,descripcion,fecha,estado){
 	//Crea locacion google
 	var myLatLng = new google.maps.LatLng(latitud, longitud);
 	//Crea marcador
@@ -92,6 +92,7 @@ function mostrarReclamo(titulo,imagen,longitud,latitud,descripcion,fecha){
             '<div id="bodyContent">'+
 			'<h4>Descripcion: </h4>'+descripcion+
 			'<h4>Fecha: </h4>'+fecha+
+			'<h4>Estado: </h4>'+estado+
             '</div>'+
             '</div>';
 	//Asocia cartel con la ventana
@@ -167,7 +168,7 @@ function mostrarTodosReclamosRealizados(){
 			//Muestra los reclamos
 			for(index = 0; index < data.length; ++index){
 				reclamo = data[index];
-				mostrarReclamo(reclamo.titulo,reclamo.imagen,reclamo.longitud,reclamo.latitud,reclamo.descripcion,reclamo.fecha);
+				mostrarReclamo(reclamo.titulo,reclamo.imagen,reclamo.longitud,reclamo.latitud,reclamo.descripcion,reclamo.fecha,reclamo.estado);
 			}
 		}
 	});

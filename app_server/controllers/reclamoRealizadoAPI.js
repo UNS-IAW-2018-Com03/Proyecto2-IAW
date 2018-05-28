@@ -22,6 +22,7 @@ const setReclamoRealizado = function(req,res) {
   reclamoRealizado.longitud = req.body.longitud;
   reclamoRealizado.fecha = req.body.fecha;
   reclamoRealizado.user = req.user._id;
+  reclamoRealizado.estado = 'Pendiente';
   reclamoRealizado
           .save(function(err){
                     if(err){

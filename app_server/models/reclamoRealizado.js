@@ -28,6 +28,10 @@ const reclamoRealizadoSchema = new mongoose.Schema({
   user:{
     type: String,
     requiere: true
+  },
+  estado:{
+    type: String,
+    requiere: true
   }
 });
 
