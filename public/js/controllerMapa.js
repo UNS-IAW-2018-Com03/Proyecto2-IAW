@@ -12,7 +12,7 @@ function initMap(num) {
 		map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -38.7182833, lng: -62.2666803},
           zoom: 16,
-		  draggable: false,
+		  draggable: true,
 		  zoomControl: false,
 		  scrollwheel: false,
 		  mapTypeControlOptions: {
