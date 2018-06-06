@@ -13,8 +13,8 @@ function initMap(num) {
           center: {lat: -38.7182833, lng: -62.2666803},
           zoom: 16,
 		  draggable: true,
-		  zoomControl: false,
-		  scrollwheel: false,
+		  zoomControl: true,
+		  scrollwheel: true,
 		  mapTypeControlOptions: {
             mapTypeIds: []
           }

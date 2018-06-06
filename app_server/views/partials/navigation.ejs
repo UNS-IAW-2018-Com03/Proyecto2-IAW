@@ -21,9 +21,9 @@
       <%if(user == null){%>
   	    <li><a href="/auth/google"  class="btn btn-danger"><span class="fa fa-google-plus"></span> Login</a></li>
       <%}else{%>
-        <li><h4 id="ciudad"></h4></li>
-        <li><h4 id="clima"></h4></li>
-        <li><h4><%=user.google.name%></h4></li>
+        <li><a id="ciudad"></a></li>
+        <li><a id="clima"></a></li>
+        <li><a><%=user.google.name%></a></li>
         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
       <%}%>
 	</ul>
