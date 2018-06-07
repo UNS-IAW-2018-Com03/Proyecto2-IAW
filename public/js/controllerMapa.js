@@ -14,6 +14,7 @@ function initMap(num) {
           zoom: 16,
 		  draggable: true,
 		  zoomControl: true,
+			disableDoubleClickZoom: true,
 		  scrollwheel: true,
 		  mapTypeControlOptions: {
             mapTypeIds: []
